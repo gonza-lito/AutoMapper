@@ -16,13 +16,13 @@ var AutoMapperJs;
     var Samples;
     (function (Samples) {
         'use strict';
-        var Base = (function () {
+        var Base = /** @class */ (function () {
             function Base() {
             }
             return Base;
         }());
         Samples.Base = Base;
-        var Person = (function (_super) {
+        var Person = /** @class */ (function (_super) {
             __extends(Person, _super);
             function Person() {
                 return _super !== null && _super.apply(this, arguments) || this;
@@ -30,7 +30,7 @@ var AutoMapperJs;
             return Person;
         }(Base));
         Samples.Person = Person;
-        var MappingProfile = (function () {
+        var MappingProfile = /** @class */ (function () {
             function MappingProfile() {
                 this.sourceMemberNamingConvention = new AutoMapperJs.PascalCaseNamingConvention();
                 this.destinationMemberNamingConvention = new AutoMapperJs.CamelCaseNamingConvention();
@@ -42,7 +42,7 @@ var AutoMapperJs;
             };
             return MappingProfile;
         }());
-        var InitializeSamples = (function () {
+        var InitializeSamples = /** @class */ (function () {
             function InitializeSamples() {
             }
             InitializeSamples.initialize = function () {
@@ -61,7 +61,7 @@ var AutoMapperJs;
             return InitializeSamples;
         }());
         Samples.InitializeSamples = InitializeSamples;
-        var ForMemberSamples = (function () {
+        var ForMemberSamples = /** @class */ (function () {
             function ForMemberSamples() {
             }
             ForMemberSamples.simpleMapFrom = function () {

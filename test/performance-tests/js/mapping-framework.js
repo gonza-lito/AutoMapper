@@ -4,7 +4,7 @@
 var AutoMapperJS;
 (function (AutoMapperJS) {
     'use strict';
-    var MappingPerformanceTestFrame = (function () {
+    var MappingPerformanceTestFrame = /** @class */ (function () {
         function MappingPerformanceTestFrame() {
         }
         MappingPerformanceTestFrame.prototype.execute = function (repetitions) {

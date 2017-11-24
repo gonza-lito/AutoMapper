@@ -3,7 +3,7 @@
 var AutoMapperJS;
 (function (AutoMapperJS) {
     'use strict';
-    var SimpleMappingPerformance = (function () {
+    var SimpleMappingPerformance = /** @class */ (function () {
         function SimpleMappingPerformance() {
         }
         SimpleMappingPerformance.prototype.execute = function (repetitions) {
