@@ -50,6 +50,7 @@
     "path": "^0.12.7",
     "phantomjs-prebuilt": "^2.1.14",
     "tslint": "^5.3.2",
-    "typescript": "^2.1.4"
-  }
+    "typescript": "^3.1.1"
+  },
+  "dependencies": {}
 }
