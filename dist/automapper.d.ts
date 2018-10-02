@@ -9,6 +9,9 @@ declare module AutoMapperJs {
      * .NET AutoMapper library is the pursuit of this implementation.
      */
     class AutoMapper {
+
+        static getInstance(): AutoMapper;
+
         /**
          * Initializes the mapper with the supplied configuration.
          * @param {(config: IConfiguration) => void} Configuration function to call.
@@ -20,7 +23,7 @@ declare module AutoMapperJs {
          * @param {string} sourceKey The map source key.
          * @returns {(destinationKey: string) => ICreateMapFluentFunctions}
          */
-        createMap(sourceKey: string | (new() => any)): (destinationKey: string | (new() => any)) => ICreateMapFluentFunctions;
+        createMap(sourceKey: string | (new () => any)): (destinationKey: string | (new () => any)) => ICreateMapFluentFunctions;
 
         /**
          * Create a mapping profile.
@@ -28,14 +31,14 @@ declare module AutoMapperJs {
          * @param {string} destinationKey The map destination key.
          * @returns {Core.ICreateMapFluentFunctions}
          */
-        createMap(sourceKey: string | (new() => any), destinationKey: string | (new() => any)): ICreateMapFluentFunctions;
+        createMap(sourceKey: string | (new () => any), destinationKey: string | (new () => any)): ICreateMapFluentFunctions;
 
         /**
          * Create a map curry function which expects a destination key and a source object.
          * @param sourceKey Source key, for instance the source type name.
          * @returns {(destinationKey: string, sourceObject: any) => any}
          */
-        map(sourceKey: string | (new() => any)): (destinationKey: string | (new() => any), sourceObject: any) => any;
+        map(sourceKey: string | (new () => any)): (destinationKey: string | (new () => any), sourceObject: any) => any;
 
         /**
          * Create a map curry function which expects only a source object.
@@ -43,7 +46,7 @@ declare module AutoMapperJs {
          * @param destinationKey Destination key, for instance the destination type name.
          * @returns {(sourceObject: any) => any}
          */
-        map(sourceKey: string | (new() => any), destinationKey: string | (new() => any)): (sourceObject: any) => any;
+        map(sourceKey: string | (new () => any), destinationKey: string | (new () => any)): (sourceObject: any) => any;
 
         /**
          * Execute a mapping from the source object to a new destination object with explicit mapping configuration and supplied mapping options (using createMap).
@@ -52,14 +55,14 @@ declare module AutoMapperJs {
          * @param sourceObject The source object to map.
          * @returns {any} Destination object.
          */
-        map(sourceKey: string | (new() => any), destinationKey: string | (new() => any), sourceObject: any): any;
+        map(sourceKey: string | (new () => any), destinationKey: string | (new () => any), sourceObject: any): any;
 
         /**
          * Create a mapAsync curry function which expects a destination key, a source object and a callback function.
          * @param sourceKey Source key, for instance the source type name.
          * @returns {(destinationKey: string, sourceObject: any, callback: IMapCallback) => void}
          */
-        mapAsync(sourceKey: string | (new() => any)): (destinationKey: string | (new() => any), sourceObject: any, callback: IMapCallback) => void;
+        mapAsync(sourceKey: string | (new () => any)): (destinationKey: string | (new () => any), sourceObject: any, callback: IMapCallback) => void;
 
         /**
          * Create a map curry function which expects only a source object and a callback function.
@@ -68,7 +71,7 @@ declare module AutoMapperJs {
          * @param sourceObject The source object to map.
          * @returns {(callback: IMapCallback) => void}
          */
-        mapAsync(sourceKey: string | (new() => any), destinationKey: string | (new() => any), sourceObject: any): (callback: IMapCallback) => void;
+        mapAsync(sourceKey: string | (new () => any), destinationKey: string | (new () => any), sourceObject: any): (callback: IMapCallback) => void;
 
         /**
          * Create a map curry function which expects only a source object and a callback function.
@@ -76,7 +79,7 @@ declare module AutoMapperJs {
          * @param destinationKey Destination key, for instance the destination type name.
          * @returns {(sourceObject: any, callback: IMapCallback) => void}
          */
-        mapAsync(sourceKey: string | (new() => any), destinationKey: string | (new() => any)): (sourceObject: any, callback: IMapCallback) => void;
+        mapAsync(sourceKey: string | (new () => any), destinationKey: string | (new () => any)): (sourceObject: any, callback: IMapCallback) => void;
 
         /**
          * Execute an asynchronous mapping from the source object to a new destination object with explicit mapping configuration and supplied mapping options (using createMap).
@@ -85,7 +88,7 @@ declare module AutoMapperJs {
          * @param sourceObject The source object to map.
          * @param {IMapCallback} callback The callback to call when asynchronous mapping is complete.
          */
-        mapAsync(sourceKey: string | (new() => any), destinationKey: string | (new() => any), sourceObject: any, callback: IMapCallback): void;
+        mapAsync(sourceKey: string | (new () => any), destinationKey: string | (new () => any), sourceObject: any, callback: IMapCallback): void;
 
         /**
          * Validates mapping configuration by dry-running. Since JS does not
@@ -118,13 +121,13 @@ declare module AutoMapperJs {
     export class Profile implements IProfile {
         /** Profile name */
         public profileName: string;
-        
+
         /** Naming convention for source members */
         public sourceMemberNamingConvention: INamingConvention;
-        
+
         /** Naming convention for destination members */
         public destinationMemberNamingConvention: INamingConvention;
-        
+
         /**
          * Create a createMap curry function which expects only a destination key.
          * @param {string} sourceKey The map source key.
@@ -139,14 +142,14 @@ declare module AutoMapperJs {
          * @returns {Core.ICreateMapFluentFunctions}
          */
         protected createMap(sourceKey: string, destinationKey: string): ICreateMapFluentFunctions;
-        
+
         /**
          * Implement this method in a derived class and call the CreateMap method to associate that map with this profile.
          * Avoid calling the AutoMapper class / automapper instance from this method. 
          */
         public configure(): void;
     }
-    
+
     /**
      * Defines the PascalCase naming convention strategy.
      */
@@ -164,7 +167,7 @@ declare module AutoMapperJs {
          */
         transformPropertyName(sourcePropertyNameParts: string[]): string;
     }
-    
+
     /**
      * Defines the camelCase naming convention strategy.
      */
@@ -242,7 +245,7 @@ declare module AutoMapperJs {
         mapping: IMapping;
         root: IPropertyOld;
         parent: IPropertyOld;
-        destinations: {[name: string]: IPropertyDestinationMetadata};
+        destinations: { [name: string]: IPropertyDestinationMetadata };
         destinationCount: number;
     }
 
@@ -296,8 +299,8 @@ declare module AutoMapperJs {
          * @returns {IAutoMapperCreateMapChainingFunctions}
          */
         forMember: (sourceProperty: string, valueOrFunction: any |
-                     ((opts: IMemberConfigurationOptions) => any) |
-                     ((opts: IMemberConfigurationOptions, cb: IMemberCallback) => void)) => ICreateMapFluentFunctions;
+            ((opts: IMemberConfigurationOptions) => any) |
+            ((opts: IMemberConfigurationOptions, cb: IMemberCallback) => void)) => ICreateMapFluentFunctions;
 
         /**
          * Customize configuration for an individual source member.
@@ -306,9 +309,9 @@ declare module AutoMapperJs {
          * @returns {IAutoMapperCreateMapChainingFunctions}
          */
         forSourceMember: (sourceProperty: string,
-                          sourceMemberConfigFunction: ((opts: ISourceMemberConfigurationOptions) => any) |
-                                                      ((opts: ISourceMemberConfigurationOptions, cb: IMemberCallback) => void)
-                         ) => ICreateMapFluentFunctions;
+            sourceMemberConfigFunction: ((opts: ISourceMemberConfigurationOptions) => any) |
+                ((opts: ISourceMemberConfigurationOptions, cb: IMemberCallback) => void)
+        ) => ICreateMapFluentFunctions;
 
         /**
          * Customize configuration for all destination members.
@@ -327,10 +330,10 @@ declare module AutoMapperJs {
          * @param typeConverterClassOrFunction The converter class or function to use when converting.
          */
         convertUsing: (typeConverterClassOrFunction: ((resolutionContext: IResolutionContext) => any) |
-                                                     ((resolutionContext: IResolutionContext, callback: IMapCallback) => void) |
-                                                     ITypeConverter |
-                                                     (new() => ITypeConverter)
-                      ) => void;
+            ((resolutionContext: IResolutionContext, callback: IMapCallback) => void) |
+            ITypeConverter |
+            (new () => ITypeConverter)
+        ) => void;
 
         /**
          * Specify to which class type AutoMapper should convert. When specified, AutoMapper will create an instance of the given type, instead of returning a new object literal.
@@ -369,7 +372,7 @@ declare module AutoMapperJs {
          * @returns {any} Destination object.
          */
         typeConverterFunction: ((resolutionContext: IResolutionContext) => any) |
-                               ((resolutionContext: IResolutionContext, callback: IMapCallback) => void);
+        ((resolutionContext: IResolutionContext, callback: IMapCallback) => void);
 
         /** The source type class to convert from. */
         sourceTypeClass: any;

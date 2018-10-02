@@ -46,7 +46,7 @@ var AutoMapperJs;
         });
         it('should ignore properties on source object missing on destination object type Definition', function () {
             // arrange
-            var DestinationType = (function () {
+            var DestinationType = /** @class */ (function () {
                 function DestinationType() {
                     this.keep = null;
                 }
@@ -67,14 +67,14 @@ var AutoMapperJs;
         });
         it('should ignore properties on source object missing on destination object type Definition for nested objects too', function () {
             // arrange
-            var DestinationType = (function () {
+            var DestinationType = /** @class */ (function () {
                 function DestinationType() {
                     this.keep = null;
                     this.nested = new NestedDestinationType;
                 }
                 return DestinationType;
             }());
-            var NestedDestinationType = (function () {
+            var NestedDestinationType = /** @class */ (function () {
                 function NestedDestinationType() {
                     this.keep = null;
                 }
@@ -101,7 +101,7 @@ var AutoMapperJs;
         });
         it('should return null on null source object', function () {
             // arrange
-            var DestinationType = (function () {
+            var DestinationType = /** @class */ (function () {
                 function DestinationType() {
                     this.keep = null;
                 }
@@ -118,7 +118,7 @@ var AutoMapperJs;
         });
         it('should return undefined on undefined source object', function () {
             // arrange
-            var DestinationType = (function () {
+            var DestinationType = /** @class */ (function () {
                 function DestinationType() {
                     this.keep = null;
                 }

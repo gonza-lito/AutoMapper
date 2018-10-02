@@ -779,37 +779,37 @@ var AutoMapperJs;
         //         expect(dst.businessAddress.zip).toBe(src.businessAddress.zip);
         //     });
     });
-    var ClassA = (function () {
+    var ClassA = /** @class */ (function () {
         function ClassA() {
             this.propA = null;
         }
         return ClassA;
     }());
-    var ClassB = (function () {
+    var ClassB = /** @class */ (function () {
         function ClassB() {
             this.propA = null;
         }
         return ClassB;
     }());
     //Initialization of property necessary to force Javascript create this property on class
-    var ClassC = (function () {
+    var ClassC = /** @class */ (function () {
         function ClassC() {
             this.propA = null;
         }
         return ClassC;
     }());
-    var ClassWithDefaultValues = (function () {
+    var ClassWithDefaultValues = /** @class */ (function () {
         function ClassWithDefaultValues() {
             this.propA = 'default value';
         }
         return ClassWithDefaultValues;
     }());
-    var DemoToBusinessType = (function () {
+    var DemoToBusinessType = /** @class */ (function () {
         function DemoToBusinessType() {
         }
         return DemoToBusinessType;
     }());
-    var CustomTypeConverterInstance = (function (_super) {
+    var CustomTypeConverterInstance = /** @class */ (function (_super) {
         __extends(CustomTypeConverterInstance, _super);
         function CustomTypeConverterInstance() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -819,7 +819,7 @@ var AutoMapperJs;
         };
         return CustomTypeConverterInstance;
     }(AutoMapperJs.TypeConverter));
-    var CustomTypeConverterDefinition = (function (_super) {
+    var CustomTypeConverterDefinition = /** @class */ (function (_super) {
         __extends(CustomTypeConverterDefinition, _super);
         function CustomTypeConverterDefinition() {
             return _super !== null && _super.apply(this, arguments) || this;
