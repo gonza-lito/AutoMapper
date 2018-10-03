@@ -1,11 +1,16 @@
-/// <reference path="../../dist/automapper-interfaces.d.ts" />
-/// <reference path="AutoMapper.ts" />
-/// <reference path="TypeConverter.ts" />
-/// <reference path="AutoMapperHelper.ts" />
-/// <reference path="AutoMapperValidator.ts" />
-
-module AutoMapperJs {
-    'use strict';
+import { AutoMapperBase } from './AutoMapperBase';
+import { DestinationTransformationType } from './AutoMapperEnumerations';
+import { IAsyncTransformCallback } from './interfaces/IAsyncTransformCallback';
+import { IDestinationProperty } from './interfaces/IDestinationProperty';
+import { IDestinationTransformation } from './interfaces/IDestinationTransformation';
+import { IMapCallback } from './interfaces/IMapCallback';
+import { IAsyncMapItemFunction } from './interfaces/IMapItemFunction';
+import { IMapping } from './interfaces/IMapping';
+import { IMemberCallback } from './interfaces/IMemberCallback';
+import { IMemberConfigurationOptions } from './interfaces/IMemberConfigurationOptions';
+import { IResolutionContext } from './interfaces/IResolutionContext';
+import { ISourceMemberConfigurationOptions } from './interfaces/ISourceMemberConfigurationOptions';
+import { ISourceProperty } from './interfaces/ISourceProperty';
 
     // interface shorthands
     type IDMCO = IMemberConfigurationOptions;
@@ -15,7 +20,7 @@ module AutoMapperJs {
      * AsyncAutoMapper implementation, for asynchronous mapping support when using AutoMapper.
      */
     export class AsyncAutoMapper extends AutoMapperBase {
-        private static asyncInstance = new AsyncAutoMapper();
+        public static asyncInstance = new AsyncAutoMapper();
 
         constructor() {
             super();
@@ -41,13 +46,21 @@ module AutoMapperJs {
 
         public map(m: { [key: string]: IMapping }, srcKey: string | (new () => any)): (dstKey: string | (new () => any), srcObj: any, cb: IMapCallback) => void;
         public map(m: { [key: string]: IMapping }, srcKey: string | (new () => any), dstKey: string | (new () => any)): (srcObj: any, cb: IMapCallback) => void;
-        public map(m: { [key: string]: IMapping }, srcKey: string | (new () => any), dstKey?: string | (new () => any), sourceObject?: any): (cb: IMapCallback) => void;
-        public map(m: { [key: string]: IMapping }, srcKey: string | (new () => any), dstKey?: string | (new () => any), sourceObject?: any, cb?: IMapCallback): void;
+        public map(
+            m: { [key: string]: IMapping },
+            srcKey: string | (new () => any),
+            dstKey?: string | (new () => any),
+            sourceObject?: any): (cb: IMapCallback) => void;
+        public map(
+            m: { [key: string]: IMapping },
+            srcKey: string | (new () => any),
+            dstKey?: string | (new () => any),
+            sourceObject?: any, cb?: IMapCallback): void;
         public map(mappings: { [key: string]: IMapping },
-            sourceKey: string | (new () => any),
-            destinationKey?: string | (new () => any),
-            sourceObject?: any,
-            callback?: IMapCallback): any /* actually, void (impossible with overloads) */ {
+                   sourceKey: string | (new () => any),
+                   destinationKey?: string | (new () => any),
+                   sourceObject?: any,
+                   callback?: IMapCallback): any /* actually, void (impossible with overloads) */ {
 
             switch (arguments.length) {
                 case 5:
@@ -71,26 +84,31 @@ module AutoMapperJs {
                 return;
             }
 
-            return (<IAsyncMapItemFunction>mapping.mapItemFunction)(mapping, sourceObject, super.createDestinationObject(mapping.destinationTypeClass), callback);
+            return (mapping.mapItemFunction as IAsyncMapItemFunction)(
+                mapping,
+                sourceObject,
+                super.createDestinationObject(mapping.destinationTypeClass),
+                callback);
         }
 
         /**
-         * Execute a mapping from the source array to a new destination array with explicit mapping configuration and supplied mapping options (using createMap).
+         * Execute a mapping from the source array to a new destination array
+         * with explicit mapping configuration and supplied mapping options (using createMap).
          * @param mapping The mapping configuration for the current mapping keys/types.
          * @param sourceArray The source array to map.
          * @returns {Array<any>} Destination array.
          */
-        private mapArray(mapping: IMapping, sourceArray: Array<any>, callback: IMapCallback): void {
-            var callbacksToGo = 0;
+        private mapArray(mapping: IMapping, sourceArray: any[], callback: IMapCallback): void {
+            let callbacksToGo = 0;
 
-            var destinationArray = super.handleArray(mapping, sourceArray, (sourceObject: any, destinationObject: any) => {
+            const destinationArray = super.handleArray(mapping, sourceArray, (sourceObject: any, destinationObject: any) => {
                 callbacksToGo++;
-                (<IAsyncMapItemFunction>mapping.mapItemFunction)(mapping, sourceObject, destinationObject, (result: any): void => {
+                (mapping.mapItemFunction as IAsyncMapItemFunction)(mapping, sourceObject, destinationObject, (result: any): void => {
                     callbacksToGo--;
                 });
             });
 
-            var waitForCallbackToSend = (): void => {
+            const waitForCallbackToSend = (): void => {
                 if (callbacksToGo === 0) {
                     callback(destinationArray);
                 } else {
@@ -104,22 +122,23 @@ module AutoMapperJs {
         }
 
         private mapItemUsingTypeConverter(mapping: IMapping, sourceObject: any, destinationObject: any, callback: IMapCallback): void {
-            var resolutionContext: IResolutionContext = {
+            const resolutionContext: IResolutionContext = {
                 sourceValue: sourceObject,
-                destinationValue: destinationObject
+                destinationValue: destinationObject,
             };
-            (<(ctx: IResolutionContext, cb: IMapCallback) => any>mapping.typeConverterFunction)(resolutionContext, callback);
+            (mapping.typeConverterFunction as (ctx: IResolutionContext, cb: IMapCallback) => any)(resolutionContext, callback);
         }
 
         /**
-         * Execute a mapping from the source object to a new destination object with explicit mapping configuration and supplied mapping options (using createMap).
+         * Execute a mapping from the source object to a new destination object with explicit
+         * mapping configuration and supplied mapping options (using createMap).
          * @param mapping The mapping configuration for the current mapping keys/types.
          * @param sourceObject The source object to map.
          * @param destinationObject The destination object to map to.
          * @param callback The callback to call after async mapping has been executed.
          */
         private mapItem(mapping: IMapping, sourceObject: any, destinationObject: any, callback: IMapCallback): void {
-            var callbacksToGo = 0;
+            let callbacksToGo = 0;
 
             super.handleItem(mapping, sourceObject, destinationObject, (sourceProperty: string) => {
                 callbacksToGo++;
@@ -128,7 +147,7 @@ module AutoMapperJs {
                 });
             });
 
-            var waitForCallbackToSend = (): void => {
+            const waitForCallbackToSend = (): void => {
                 if (callbacksToGo === 0) {
                     callback(destinationObject);
                 } else {
@@ -142,7 +161,8 @@ module AutoMapperJs {
         }
 
         /**
-         * Execute a mapping from the source object property to the destination object property with explicit mapping configuration and supplied mapping options.
+         * Execute a mapping from the source object property to the destination object
+         * property with explicit mapping configuration and supplied mapping options.
          * @param mapping The mapping configuration for the current mapping keys/types.
          * @param sourceObject The source object to map.
          * @param sourcePropertyName The source property to map.
@@ -152,7 +172,13 @@ module AutoMapperJs {
         private mapProperty(mapping: IMapping, sourceObject: any, sourceProperty: string, destinationObject: any, callback: IMemberCallback): void {
             super.handleProperty(mapping, sourceObject, sourceProperty, destinationObject,
                 (destinationProperty: IDestinationProperty, options: IDMCO) => {
-                    this.transform(mapping, sourceObject, destinationProperty, destinationObject, options, (destinationPropertyValue: any, success: boolean) => {
+                    this.transform(
+                        mapping,
+                        sourceObject,
+                        destinationProperty,
+                        destinationObject,
+                        options,
+                        (destinationPropertyValue: any, success: boolean) => {
                         callback(destinationPropertyValue);
                     });
                 }, (destinationPropertyValue: any) => {
@@ -168,16 +194,22 @@ module AutoMapperJs {
             options: IDMCO,
             callback: IAsyncTransformCallback
         ): void {
-            var childDestinationProperty = destinationProperty.child;
+            const childDestinationProperty = destinationProperty.child;
             if (childDestinationProperty) {
-                var childDestinationObject = destinationObject[destinationProperty.name];
+                let childDestinationObject = destinationObject[destinationProperty.name];
                 if (!childDestinationObject) {
                     // no child source object? create.
-                    childDestinationObject = <any>{};
+                    childDestinationObject = {} as any;
                 }
 
                 // transform child by recursively calling the transform function.
-                this.transform(mapping, sourceObject, childDestinationProperty, childDestinationObject, options, (callbackValue: any, success: boolean): void => {
+                this.transform(
+                    mapping,
+                    sourceObject,
+                    childDestinationProperty,
+                    childDestinationObject,
+                    options,
+                    (callbackValue: any, success: boolean): void => {
                     if (success) {
                         // only set child destination object when transformation has been successful.
                         destinationObject[destinationProperty.name] = childDestinationObject;
@@ -210,7 +242,7 @@ module AutoMapperJs {
                 return;
             }
 
-            let transformation = transformations[0];
+            const transformation = transformations[0];
             this.processTransformation(property, transformation, options, (callbackValue: any, success: boolean) => {
                 if (!success) {
                     callback(options.intermediatePropertyValue, false);
@@ -231,7 +263,7 @@ module AutoMapperJs {
                     callback(options.intermediatePropertyValue, true);
                     return;
                 case DestinationTransformationType.MemberOptions: {
-                    let result = transformation.memberConfigurationOptionsFunc(options);
+                    const result = transformation.memberConfigurationOptionsFunc(options);
                     if (typeof result !== 'undefined') {
                         options.intermediatePropertyValue = result;
                     } else if (!options.sourceObject) {
@@ -243,7 +275,7 @@ module AutoMapperJs {
                     return;
                 }
                 case DestinationTransformationType.SourceMemberOptions: {
-                    let result = transformation.sourceMemberConfigurationOptionsFunc(<ISMCO>options);
+                    const result = transformation.sourceMemberConfigurationOptionsFunc(options as ISMCO);
                     if (typeof result !== 'undefined') {
                         options.intermediatePropertyValue = result;
                     } else if (!options.sourceObject) {
@@ -281,4 +313,3 @@ module AutoMapperJs {
             }
         }
     }
-}

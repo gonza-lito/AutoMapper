@@ -1,20 +1,27 @@
 {
     "version": "0.1.0",
-    "command": "gulp",
+    "command": "npm",
     "isShellCommand": true,
-    "args": [
-        //"--no-color"
-    ],
+    "suppressTaskName": true,
     "tasks": [
         {
-            "taskName": "release", //"default",
-            "args": [],
-            "isBuildCommand": true
+            // Build task, Cmd+Shift+B
+            // "npm run build"
+            "taskName": "build",
+            "isBuildCommand": true,
+            "args": [
+                "run",
+                "build"
+            ]
         },
         {
+            // Test task, Cmd+Shift+T
+            // "npm test"
             "taskName": "test",
             "isTestCommand": true,
-            "showOutput": "always"
+            "args": [
+                "test"
+            ]
         }
     ]
 }

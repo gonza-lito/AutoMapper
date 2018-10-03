@@ -173,7 +173,7 @@ ClientBin/
 node_modules/
 
 # Folders starting with double underscores (usually testing/temporary)
-**/__*/ 
+**/__*/
 
 # RIA/Silverlight projects
 Generated_Code/
@@ -203,3 +203,41 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 */dist/**/*.*
+# Logs #
+/logs
+*.log
+*.log*
+
+# Node files #
+node_modules/
+npm-debug.log
+yarn-error.log
+.env
+
+# OS generated files #
+.DS_Store
+Thumbs.db
+
+# Typing #
+typings/
+
+# Dist #
+dist/
+ormconfig.json
+tsconfig.build.json
+
+# IDE #
+.idea/
+*.swp
+.awcache
+
+# Generated source-code #
+src/**/*.js
+src/**/*.js.map
+!src/public/**/*
+test/**/*.js
+test/**/*.js.map
+coverage/
+!test/preprocessor.js
+mydb.sql
+!src/newrelic.js

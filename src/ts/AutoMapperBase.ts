@@ -1,15 +1,15 @@
-/// <reference path="../../dist/automapper-interfaces.d.ts" />
-/// <reference path="TypeConverter.ts" />
-/// <reference path="AutoMapperHelper.ts" />
-/// <reference path="AutoMapperValidator.ts" />
-
-module AutoMapperJs {
-    'use strict';
+import { AutoMapperHelper } from './AutoMapperHelper';
+import { IDestinationProperty } from './interfaces/IDestinationProperty';
+import { IMapping } from './interfaces/IMapping';
+import { IMemberCallback } from './interfaces/IMemberCallback';
+import { IMemberConfigurationOptions } from './interfaces/IMemberConfigurationOptions';
+import { IProfile } from './interfaces/IProfile';
+import { ISourceProperty } from './interfaces/ISourceProperty';
 
     // interface shorthands
-    type IFluentFunc = ICreateMapFluentFunctions;
+   // type IFluentFunc = ICreateMapFluentFunctions;
     type IDMCO = IMemberConfigurationOptions;
-    type ISMCO = ISourceMemberConfigurationOptions;
+   // type ISMCO = ISourceMemberConfigurationOptions;
 
     type stringOrClass = string | (new () => any);
 
@@ -24,9 +24,9 @@ module AutoMapperJs {
         public abstract createMap(sourceKeyOrType: string | (new () => any), destinationKeyOrType: string | (new () => any)): any;
 
         protected getMapping(mappings: { [key: string]: IMapping }, sourceKey: stringOrClass, destinationKey: stringOrClass): IMapping {
-            let srcKey = this.getKey(sourceKey);
-            let dstKey = this.getKey(destinationKey);
-            let mapping: IMapping = mappings[srcKey + dstKey];
+            const srcKey = this.getKey(sourceKey);
+            const dstKey = this.getKey(destinationKey);
+            const mapping: IMapping = mappings[srcKey + dstKey];
 
             if (!mapping) {
                 throw new Error(`Could not find map object with a source of ${srcKey} and a destination of ${dstKey}`);
@@ -46,12 +46,12 @@ module AutoMapperJs {
             return sourceObject instanceof Array;
         }
 
-        protected handleArray(mapping: IMapping, sourceArray: Array<any>, itemFunc: (sourceObject: any, destinationObject: any) => void): Array<any> {
-            var arrayLength = sourceArray.length;
-            var destinationArray = new Array<any>(sourceArray.length);
+        protected handleArray(mapping: IMapping, sourceArray: any[], itemFunc: (sourceObject: any, destinationObject: any) => void): any[] {
+            const arrayLength = sourceArray.length;
+            const destinationArray = new Array<any>(sourceArray.length);
 
             for (let index = 0; index < arrayLength; index++) {
-                let sourceObject = sourceArray[index];
+                const sourceObject = sourceArray[index];
                 let destinationObject: any;
 
                 if (sourceObject === null || sourceObject === undefined) {
@@ -69,10 +69,10 @@ module AutoMapperJs {
 
         protected handleItem(mapping: IMapping, sourceObject: any, destinationObject: any, propertyFunction: (propertyName: string) => void): any {
             // var sourceProperties: string[] = [];
-            var atLeastOnePropertyMapped = false;
+            let atLeastOnePropertyMapped = false;
 
             // handle mapped properties ...
-            for (let property of mapping.properties) {
+            for (const property of mapping.properties) {
                 // sourceProperties.push(property.name);
 
                 atLeastOnePropertyMapped = true;
@@ -80,7 +80,7 @@ module AutoMapperJs {
             }
 
             // .. and, after that, handle unmapped properties
-            for (let sourcePropertyName in sourceObject) {
+            for (const sourcePropertyName in sourceObject) {
                 if (!sourceObject.hasOwnProperty(sourcePropertyName)) {
                     continue;
                 }
@@ -107,9 +107,9 @@ module AutoMapperJs {
 
             // TODO Property mappings are already located before
             // TODO handleProperty seems only to be called when processing a mapped property.
-            var propertyMappings = this.getPropertyMappings(mapping.properties, sourcePropertyName);
+            const propertyMappings = this.getPropertyMappings(mapping.properties, sourcePropertyName);
             if (propertyMappings.length > 0) {
-                for (let propertyMapping of propertyMappings) {
+                for (const propertyMapping of propertyMappings) {
                     this.processMappedProperty(mapping, propertyMapping, sourceObject, sourcePropertyName, transformFunction);
                 }
             } else {
@@ -119,7 +119,7 @@ module AutoMapperJs {
 
         protected setPropertyValue(mapping: IMapping, destinationProperty: IDestinationProperty, destinationObject: any, destinationPropertyValue: any): void {
             if (mapping.forAllMemberMappings.length > 0) {
-                for (let forAllMemberMapping of mapping.forAllMemberMappings) {
+                for (const forAllMemberMapping of mapping.forAllMemberMappings) {
                     forAllMemberMapping(destinationObject, destinationProperty.name, destinationPropertyValue);
                 }
             } else {
@@ -129,7 +129,7 @@ module AutoMapperJs {
 
         protected setPropertyValueByName(mapping: IMapping, destinationObject: any, destinationProperty: string, destinationPropertyValue: any): void {
             if (mapping.forAllMemberMappings.length > 0) {
-                for (let forAllMemberMapping of mapping.forAllMemberMappings) {
+                for (const forAllMemberMapping of mapping.forAllMemberMappings) {
                     forAllMemberMapping(destinationObject, destinationProperty, destinationPropertyValue);
                 }
             } else {
@@ -165,7 +165,8 @@ module AutoMapperJs {
         //     throw new Error(`Cannot map '${propertyMapping.sourcePropertyName}' to '${propertyMapping.destinationPropertyName}' => ${message}`);
         // }
 
-        private handlePropertyWithAutoMapping(mapping: IMapping,
+        private handlePropertyWithAutoMapping(
+            mapping: IMapping,
             sourceObject: any,
             sourcePropertyName: string,
             destinationObject: any,
@@ -199,8 +200,8 @@ module AutoMapperJs {
             }
 
             // use profile mapping when specified; otherwise, specify source property name as destination property name.
-            let destinationPropertyName = this.getDestinationPropertyName(mapping.profile, sourcePropertyName);
-            let destinationPropertyValue = this.getDestinationPropertyValue(sourceObject, sourcePropertyName, objectValue, isNestedObject);
+            const destinationPropertyName = this.getDestinationPropertyName(mapping.profile, sourcePropertyName);
+            const destinationPropertyValue = this.getDestinationPropertyValue(sourceObject, sourcePropertyName, objectValue, isNestedObject);
             this.setPropertyValueByName(mapping, destinationObject, destinationPropertyName, destinationPropertyValue);
             if (autoMappingCallbackFunction) {
                 autoMappingCallbackFunction(destinationPropertyValue);
@@ -208,9 +209,9 @@ module AutoMapperJs {
         }
 
         private getDestinationPropertyValue(sourceObject: any,
-            sourcePropertyName: string,
-            objectValue: any,
-            isNestedObject: boolean): any {
+                                            sourcePropertyName: string,
+                                            objectValue: any,
+                                            isNestedObject: boolean): any {
             if (isNestedObject) {
                 return objectValue;
             }
@@ -229,7 +230,7 @@ module AutoMapperJs {
             try {
                 // First, split the source property name based on the splitting expression.
                 // TODO BL Caching of RegExp splitting!
-                var sourcePropertyNameParts = sourcePropertyName.split(profile.sourceMemberNamingConvention.splittingExpression);
+                const sourcePropertyNameParts = sourcePropertyName.split(profile.sourceMemberNamingConvention.splittingExpression);
 
                 // NOTE BL For some reason, splitting by (my ;)) RegExp results in empty strings in the array; remove them.
                 for (let index = sourcePropertyNameParts.length - 1; index >= 0; index--) {
@@ -245,8 +246,8 @@ module AutoMapperJs {
         }
 
         private getPropertyMappings(properties: ISourceProperty[], sourcePropertyName: string): ISourceProperty[] {
-            var result = <ISourceProperty[]>[];
-            for (let property of properties) {
+            const result = [] as ISourceProperty[];
+            for (const property of properties) {
                 if (property.name === sourcePropertyName) {
                     result.push(property);
                 }
@@ -255,33 +256,33 @@ module AutoMapperJs {
         }
 
         private processMappedProperty(mapping: IMapping,
-            propertyMapping: ISourceProperty,
-            sourceObject: any,
-            sourcePropertyName: string,
-            transformFunction: (destinationProperty: IDestinationProperty, memberOptions: IDMCO) => void): void {
+                                      propertyMapping: ISourceProperty,
+                                      sourceObject: any,
+                                      sourcePropertyName: string,
+                                      transformFunction: (destinationProperty: IDestinationProperty, memberOptions: IDMCO) => void): void {
             if (propertyMapping.children && propertyMapping.children.length > 0) {
                 // always pass child source object, even if source object does not exist =>
                 // constant transformations should always pass.
-                var childSourceObject = sourceObject ? sourceObject[propertyMapping.name] : null;
-                for (let child of propertyMapping.children) {
+                const childSourceObject = sourceObject ? sourceObject[propertyMapping.name] : null;
+                for (const child of propertyMapping.children) {
                     this.processMappedProperty(mapping, child, childSourceObject, child.name, transformFunction);
                     return;
                 }
             }
 
-            var destination = propertyMapping.destination;
+            const destination = propertyMapping.destination;
             // if (!propertyMapping.destination) {
             //     // it makes no sense to handle a property without destination(s).
             //     this.throwMappingException(propertyMapping, 'no destination object');
             // }
 
-            let configurationOptions = this.createMemberConfigurationOptions(sourceObject, sourcePropertyName);
+            const configurationOptions = this.createMemberConfigurationOptions(sourceObject, sourcePropertyName);
             transformFunction(destination, configurationOptions);
         }
 
         private createMemberConfigurationOptions(sourceObject: any, sourcePropertyName: string): IMemberConfigurationOptions {
-            var memberConfigurationOptions = {
-                mapFrom: (sourcePropertyName: string): void => {
+            const memberConfigurationOptions = {
+                mapFrom: (): void => {
                     // no action required, just here as a stub to prevent calling a non-existing 'opts.mapFrom(...)' function.
                 },
                 condition: (predicate: ((sourceObject: any) => boolean)): void => {
@@ -290,11 +291,10 @@ module AutoMapperJs {
                 ignore: (): void => {
                     // no action required, just here as a stub to prevent calling a non-existing 'opts.ignore()' function.
                 },
-                sourceObject: sourceObject,
-                sourcePropertyName: sourcePropertyName,
-                intermediatePropertyValue: sourceObject ? sourceObject[sourcePropertyName] : sourceObject
+                sourceObject,
+                sourcePropertyName,
+                intermediatePropertyValue: sourceObject ? sourceObject[sourcePropertyName] : sourceObject,
             };
             return memberConfigurationOptions;
         }
     }
-}
