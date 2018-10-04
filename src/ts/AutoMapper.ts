@@ -1,5 +1,4 @@
-﻿import { Func } from '../types/Curry';
-import { AsyncAutoMapper } from './AsyncAutoMapper';
+﻿import { AsyncAutoMapper } from './AsyncAutoMapper';
 import { AutoMapperBase } from './AutoMapperBase';
 import { DestinationTransformationType } from './AutoMapperEnumerations';
 import { AutoMapperHelper } from './AutoMapperHelper';
@@ -92,10 +91,10 @@ import { TypeConverter } from './TypeConverter';
          * @param {string} destinationKey The map destination key.
          * @returns {Core.ICreateMapFluentFunctions}
          */
-        public createMap(sourceKeyOrType: string | (new () => any), destinationKeyOrType?: string | (new () => any)): Func<IFluentFunc> {
+        public createMap(sourceKeyOrType: string | (new () => any), destinationKeyOrType?: string | (new () => any)): any & IFluentFunc {
             // provide currying support.
             if (arguments.length < 2) {
-                return AutoMapperHelper.handleCurrying(this.createMap, arguments, this) ;
+                return AutoMapperHelper.handleCurrying(this.createMap, arguments, this);
             }
 
             const mapping = this.createMappingObjectForGivenKeys(sourceKeyOrType, destinationKeyOrType);
@@ -111,7 +110,7 @@ import { TypeConverter } from './TypeConverter';
          * @param sourceObject The source object to map.
          * @returns {any} Destination object.
          */
-        public map(sourceKeyOrType: stringOrClass, destinationKeyOrType: stringOrClass, sourceObject: any): any {
+        public map(sourceKeyOrType: stringOrClass, destinationKeyOrType?: stringOrClass, sourceObject?: any): any {
             if (arguments.length === 3) {
                 return this.mapInternal(super.getMapping(this._mappings, sourceKeyOrType, destinationKeyOrType), sourceObject);
             }
@@ -138,9 +137,9 @@ import { TypeConverter } from './TypeConverter';
          */
         public mapAsync(
             sourceKeyOrType: string | (new () => any),
-            destinationKeyOrType: string | (new () => any),
-            sourceObject: any,
-            callback: IMapCallback): any {
+            destinationKeyOrType?: string | (new () => any),
+            sourceObject?: any,
+            callback?: IMapCallback): any {
             switch (arguments.length) {
                 case 4:
                     return this._asyncMapper.map(this._mappings, sourceKeyOrType, destinationKeyOrType, sourceObject, callback);
@@ -207,7 +206,8 @@ import { TypeConverter } from './TypeConverter';
                         // check if sync: TypeConverter class definition
                         let typeConverter: TypeConverter;
                         try {
-                            typeConverter = (new (tcClassOrFunc as new () => TypeConverter)() as TypeConverter);
+                            typeConverter = (new (tcClassOrFunc as new () => TypeConverter)());
+                            // typeConverter = (new (tcClassOrFunc as new () => TypeConverter)() as TypeConverter);
                         } catch (e) {
                             // Obviously, typeConverterClassOrFunction is not a TypeConverter class definition
                         }

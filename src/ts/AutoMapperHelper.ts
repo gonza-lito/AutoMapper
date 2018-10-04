@@ -1,4 +1,3 @@
-import { Func } from '../types/Curry';
 import { DestinationTransformationType } from './AutoMapperEnumerations';
 import { IDestinationTransformation } from './interfaces/IDestinationTransformation';
 import { IMemberConfigurationOptions } from './interfaces/IMemberConfigurationOptions';
@@ -64,14 +63,14 @@ export class AutoMapperHelper {
         return functionParameterNames;
     }
 
-    public static handleCurrying<T>(func: (...funcArgs: any[]) => Func<T> , args: IArguments, closure: any): Func<T> {
+    public static handleCurrying(func: (...funcArgs: any[]) => any , args: IArguments, closure: any): any {
         const argumentsStillToCome = func.length - args.length;
 
         // saved accumulator array
         // NOTE BL this does not deep copy array objects, only the array itself; should side effects occur, please report (or refactor).
         const argumentsCopy = Array.prototype.slice.apply(args);
 
-        function accumulator(moreArgs: IArguments, alreadyProvidedArgs: any[], stillToCome: number): Func<T> {
+        function accumulator(moreArgs: IArguments, alreadyProvidedArgs: any[], stillToCome: number): any {
             const previousAlreadyProvidedArgs = alreadyProvidedArgs.slice(0); // to reset
             const previousStillToCome = stillToCome; // to reset
 

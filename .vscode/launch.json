@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug Jest Tests",
             "type": "node",
             "request": "launch",
-            "name": "Debug",
-            "program": "${workspaceRoot}/dist/app.js",
-            "smartStep": true,
-            "outFiles": [
-                "../dist/**/*.js"
+            "runtimeArgs": [
+                "--inspect-brk",
+                "${workspaceRoot}/node_modules/.bin/jest",
+                "--runInBand",
+                "--coverage",
+                "false"
             ],
-            "protocol": "inspector",
-            "env": {
-                "NODE_ENV": "development"
-            }
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
         }
     ]
 }
