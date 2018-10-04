@@ -1,4 +1,5 @@
-﻿import { AsyncAutoMapper } from './AsyncAutoMapper';
+﻿import { Func } from '../types/Curry';
+import { AsyncAutoMapper } from './AsyncAutoMapper';
 import { AutoMapperBase } from './AutoMapperBase';
 import { DestinationTransformationType } from './AutoMapperEnumerations';
 import { AutoMapperHelper } from './AutoMapperHelper';
@@ -28,7 +29,6 @@ import { TypeConverter } from './TypeConverter';
     type IMC = IMemberCallback;
     type IRC = IResolutionContext;
     type TC = TypeConverter;
-
     // method overload shorthands
     type stringOrClass = string | (new () => any);
     type forMemberValueOrFunction = any | ((opts: IDMCO) => any) | ((opts: IDMCO, cb: IMC) => void);
@@ -92,10 +92,10 @@ import { TypeConverter } from './TypeConverter';
          * @param {string} destinationKey The map destination key.
          * @returns {Core.ICreateMapFluentFunctions}
          */
-        public createMap(sourceKeyOrType: string | (new () => any), destinationKeyOrType: string | (new () => any)): IFluentFunc {
+        public createMap(sourceKeyOrType: string | (new () => any), destinationKeyOrType?: string | (new () => any)): Func<IFluentFunc> {
             // provide currying support.
             if (arguments.length < 2) {
-                return AutoMapperHelper.handleCurrying(this.createMap, arguments, this);
+                return AutoMapperHelper.handleCurrying(this.createMap, arguments, this) ;
             }
 
             const mapping = this.createMappingObjectForGivenKeys(sourceKeyOrType, destinationKeyOrType);

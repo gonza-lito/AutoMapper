@@ -3,8 +3,9 @@
     "rules": {
         "max-line-length": [
             true,
-            160
+            200
         ],
+        "max-classes-per-file":false,
         "ban-types":[false],
         "no-unnecessary-initializer": false,
         "no-var-requires": true,

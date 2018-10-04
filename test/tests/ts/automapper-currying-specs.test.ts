@@ -1,21 +1,14 @@
-/// <reference path="../../../tools/typings/jasmine/jasmine.d.ts" />
-/// <reference path="../../typings/jasmine-utils.d.ts" />
-
-/// <reference path="../../../dist/automapper-classes.d.ts" />
-/// <reference path="../../../dist/automapper-interfaces.d.ts" />
-/// <reference path="../../../dist/automapper-declaration.d.ts" />
-
-var globalScope = this;
-
-module AutoMapperJs {
-    'use strict';
+import { AutoMapper } from '../../../src/ts/AutoMapper';
+import { IMemberCallback } from '../../../src/ts/interfaces/IMemberCallback';
+import {
+    IMemberConfigurationOptions
+} from '../../../src/ts/interfaces/IMemberConfigurationOptions';
+import {
+    ISourceMemberConfigurationOptions
+} from '../../../src/ts/interfaces/ISourceMemberConfigurationOptions';
 
     describe('AutoMapper - Currying support', () => {
-        beforeEach(() => {
-            utils.registerTools(globalScope);
-            utils.registerCustomMatchers(globalScope);
-        });
-
+        const automapper = AutoMapper.getInstance();
         it('should be able to use currying when calling createMap', () => {
             // arrange
             var fromKey = '{808D9D7F-AA89-4D07-917E-A528F055EE64}';
@@ -283,4 +276,3 @@ module AutoMapperJs {
             expect(null).fail('Expected error was not raised.');
         });
     });
-}

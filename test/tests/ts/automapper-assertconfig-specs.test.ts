@@ -71,8 +71,6 @@ import {
             automapper.createMap(AssertConfigPropertiesProp, AssertConfigPropertiesProp);
             automapper.createMap('AssertMappingConfigUntestableA', 'AssertMappingConfigUntestableB');
 
-
-
             expect(() => {
                 automapper.assertConfigurationIsValid(true);
             }).toThrow(
