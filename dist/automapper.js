@@ -52,9 +52,9 @@ class AutoMapper extends AutoMapperBase_1.AutoMapperBase {
      */
     createMap(sourceKeyOrType, destinationKeyOrType) {
         // provide currying support.
-        if (arguments.length < 2) {
-            return AutoMapperHelper_1.AutoMapperHelper.handleCurrying(this.createMap, arguments, this);
-        }
+        // if (arguments.length < 2) {
+        //     return AutoMapperHelper.handleCurrying(this.createMap, arguments, this);
+        // }
         const mapping = this.createMappingObjectForGivenKeys(sourceKeyOrType, destinationKeyOrType);
         return this.createMapGetFluentApiFunctions(mapping);
     }
@@ -145,7 +145,8 @@ class AutoMapper extends AutoMapperBase_1.AutoMapperBase {
                     // check if sync: TypeConverter class definition
                     let typeConverter;
                     try {
-                        typeConverter = new tcClassOrFunc();
+                        typeConverter = (new tcClassOrFunc());
+                        // typeConverter = (new (tcClassOrFunc as new () => TypeConverter)() as TypeConverter);
                     }
                     catch (e) {
                         // Obviously, typeConverterClassOrFunction is not a TypeConverter class definition

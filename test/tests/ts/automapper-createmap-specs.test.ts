@@ -491,7 +491,6 @@ describe('AutoMapper', () => {
 
         const fromKey = '{6E7F5757-1E55-4B55-BB86-44FF5B33DE2F}';
         const toKey = '{8521AE41-C3AF-4FCD-B7C7-A915C037D69E}';
-
         automapper
             .createMap(fromKey, toKey)
             .convertUsing(CustomTypeConverterDefinition);

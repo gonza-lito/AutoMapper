@@ -63,6 +63,12 @@ export class AutoMapperHelper {
         return functionParameterNames;
     }
 
+    public static isClassConstructor(functionString: string): boolean {
+        const regexp = /^class ([A-Za-z\d\_\-]+) (extends [A-Za-z\d\.\_\-]+)?/;
+        const match = functionString.match(regexp);
+        return match && match.length > 0;
+    }
+
     public static handleCurrying(func: (...funcArgs: any[]) => any , args: IArguments, closure: any): any {
         const argumentsStillToCome = func.length - args.length;
 

@@ -13,10 +13,27 @@
                 "${workspaceRoot}/node_modules/.bin/jest",
                 "--runInBand",
                 "--coverage",
-                "false"
+                "false",
+
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
-        }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug with ts-node",
+            "protocol": "inspector",
+            "args": [
+                "${workspaceFolder}/src/app.ts"
+            ],
+            "cwd": "${workspaceRoot}",
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register/transpile-only",
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "sourceMaps": true,}
     ]
 }

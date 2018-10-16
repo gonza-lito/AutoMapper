@@ -91,11 +91,11 @@ import { TypeConverter } from './TypeConverter';
          * @param {string} destinationKey The map destination key.
          * @returns {Core.ICreateMapFluentFunctions}
          */
-        public createMap(sourceKeyOrType: string | (new () => any), destinationKeyOrType?: string | (new () => any)): any & IFluentFunc {
+        public createMap(sourceKeyOrType: string | (new () => any), destinationKeyOrType: string | (new () => any)):  IFluentFunc {
             // provide currying support.
-            if (arguments.length < 2) {
-                return AutoMapperHelper.handleCurrying(this.createMap, arguments, this);
-            }
+            // if (arguments.length < 2) {
+            //     return AutoMapperHelper.handleCurrying(this.createMap, arguments, this);
+            // }
 
             const mapping = this.createMappingObjectForGivenKeys(sourceKeyOrType, destinationKeyOrType);
 
@@ -200,10 +200,10 @@ import { TypeConverter } from './TypeConverter';
                 }
 
                 const functionParameters = AutoMapperHelper.getFunctionParameters(tcClassOrFunc.toString());
-                switch (functionParameters.length) {
-                    default:
-                    case 0:
-                        // check if sync: TypeConverter class definition
+                const isClass = AutoMapperHelper.isClassConstructor(tcClassOrFunc.toString());
+
+
+                if (isClass) {
                         let typeConverter: TypeConverter;
                         try {
                             typeConverter = (new (tcClassOrFunc as new () => TypeConverter)());
@@ -215,6 +215,13 @@ import { TypeConverter } from './TypeConverter';
                             configureSynchronousConverterFunction(typeConverter.convert);
                             return;
                         }
+                }
+                switch (functionParameters.length) {
+                    default:
+                    case 0:
+
+                        // check if sync: TypeConverter class definition
+
                         break;
                     case 1:
                         // sync: function with resolutionContext parameter

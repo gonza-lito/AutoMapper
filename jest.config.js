@@ -2,15 +2,15 @@ module.exports = {
 
   testEnvironment: 'node',
   transform: {
-    ".(ts|tsx)": "<rootDir>/test/tests/ts/preprocessor.js"
+    "^.+\\.tsx?$": "ts-jest",
   },
   testRegex: "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
   moduleFileExtensions: [
-  "ts",
+    "ts",
     "tsx",
     "js",
     "json"
   ],
   testEnvironment: "node",
-//  setupTestFrameworkScriptFile: "./test/unit/lib/setup.ts"
+  //  setupTestFrameworkScriptFile: "./test/unit/lib/setup.ts"
 };
