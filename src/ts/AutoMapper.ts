@@ -202,7 +202,6 @@ import { TypeConverter } from './TypeConverter';
                 const functionParameters = AutoMapperHelper.getFunctionParameters(tcClassOrFunc.toString());
                 const isClass = AutoMapperHelper.isClassConstructor(tcClassOrFunc.toString());
 
-
                 if (isClass) {
                         let typeConverter: TypeConverter;
                         try {

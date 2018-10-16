@@ -1,3 +1,5 @@
+import { isEqual } from 'lodash';
+
 import { AutoMapper } from '../../../src/ts/AutoMapper';
 import { DestinationTransformationType } from '../../../src/ts/AutoMapperEnumerations';
 import { IDestinationProperty } from '../../../src/ts/interfaces/IDestinationProperty';
@@ -275,7 +277,7 @@ import { ISourceProperty } from '../../../src/ts/interfaces/ISourceProperty';
                 ], true, false);
             const source = TestHelper.createSourceProperty('birthdayString', 'birthdayString', 'birthday', null, destination);
 
-            expect(properties[0]).toMatchObject(source);
+            expect(isEqual(properties[0], source)).toBeTruthy();
         });
 
         it('should be able to use forMember to map a nested source property to a flat destination property', () => {
@@ -297,11 +299,12 @@ import { ISourceProperty } from '../../../src/ts/interfaces/ISourceProperty';
             const dstLevel1 = TestHelper.createDestinationProperty(
                 'dstLevel1', 'srcLevel1.srcLevel2', 'dstLevel1', null, [{ transformationType: 2, memberConfigurationOptionsFunc: mapFromFunc }], false, false);
 
-            const srcLevel1 = TestHelper.createSourceProperty('srcLevel1', 'srcLevel1.srcLevel2', null, null, null);
+            const srcLevel1 = TestHelper.createSourceProperty('srcLevel1', 'srcLevel1.srcLevel2', 'dstLevel1', null, null);
             const srcLevel2 = TestHelper.createSourceProperty('srcLevel2', 'srcLevel1.srcLevel2', 'dstLevel1', srcLevel1, dstLevel1);
             srcLevel1.children.push(srcLevel2);
 
-            expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
+            expect(isEqual(properties[0], srcLevel1)).toBeTruthy();
+            // expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
         });
 
         it('should be able to use stacked forMember calls to map a nested source property to a flat destination property', () => {
@@ -332,7 +335,8 @@ import { ISourceProperty } from '../../../src/ts/interfaces/ISourceProperty';
             const srcLevel2 = TestHelper.createSourceProperty('srcLevel2', 'srcLevel1.srcLevel2', 'dstLevel1', srcLevel1, dstLevel1);
             srcLevel1.children.push(srcLevel2);
 
-            expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
+            expect(isEqual(properties[0], srcLevel1)).toBeTruthy();
+          //  expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
         });
 
         it('should be able to use forMember to map a flat source property to a nested destination property', () => {
@@ -356,8 +360,8 @@ import { ISourceProperty } from '../../../src/ts/interfaces/ISourceProperty';
             dstLevel1.child = dstLevel2;
 
             const srcLevel1 = TestHelper.createSourceProperty('srcLevel1', 'srcLevel1', 'dstLevel1.dstLevel2', null, dstLevel1);
-
-            expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
+            expect(isEqual(properties[0], srcLevel1)).toBeTruthy();
+            //expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
         });
 
         it('should be able to use stacked forMember calls to forMember calls to map a flat source property to a nested destination property', () => {
@@ -387,8 +391,8 @@ import { ISourceProperty } from '../../../src/ts/interfaces/ISourceProperty';
             dstLevel1.child = dstLevel2;
 
             const srcLevel1 = TestHelper.createSourceProperty('srcLevel1', 'srcLevel1', 'dstLevel1.dstLevel2', null, dstLevel1);
-
-            expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
+            expect(isEqual(properties[0], srcLevel1)).toBeTruthy();
+            //expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
         });
 
         it('should be able to use stacked forMember calls to forMember calls to map a flat source property to a nested destination property in any order', () => {
@@ -418,8 +422,8 @@ import { ISourceProperty } from '../../../src/ts/interfaces/ISourceProperty';
             dstLevel1.child = dstLevel2;
 
             const srcLevel1 = TestHelper.createSourceProperty('srcLevel1', 'srcLevel1', 'dstLevel1.dstLevel2', null, dstLevel1);
-
-            expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
+            expect(isEqual(properties[0], srcLevel1)).toBeTruthy();
+            //expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
         });
 
         it('should be able to use forMember to map to a nested destination using mapFrom rebasing', () => {
@@ -454,8 +458,8 @@ import { ISourceProperty } from '../../../src/ts/interfaces/ISourceProperty';
             const srcLevel1 = TestHelper.createSourceProperty('srcLevel1', 'srcLevel1.srcLevel2', 'dstLevel1.dstLevel2', null, null);
             const srcLevel2 = TestHelper.createSourceProperty('srcLevel2', 'srcLevel1.srcLevel2', 'dstLevel1.dstLevel2', srcLevel1, dstLevel1);
             srcLevel1.children.push(srcLevel2);
-
-            expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
+            expect(isEqual(properties[0], srcLevel1)).toBeTruthy();
+           //expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
         });
 
         it('should be able to use forMember to map a nested source property to a nested destination property', () => {
@@ -481,8 +485,8 @@ import { ISourceProperty } from '../../../src/ts/interfaces/ISourceProperty';
             const srcLevel1 = TestHelper.createSourceProperty('srcLevel1', 'srcLevel1.srcLevel2', 'dstLevel1.dstLevel2', null, null);
             const srcLevel2 = TestHelper.createSourceProperty('srcLevel2', 'srcLevel1.srcLevel2', 'dstLevel1.dstLevel2', srcLevel1, dstLevel1);
             srcLevel1.children.push(srcLevel2);
-
-            expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
+            expect(isEqual(properties[0], srcLevel1)).toBeTruthy();
+            //expect(properties[0]).toMatchObject(srcLevel1 /* prevent stack overflow exception (parent/child properties) */);
         });
 
         it('should be able to use forMember to map a couple of nested source properties to a couple of nested destination properties', () => {
@@ -529,8 +533,8 @@ import { ISourceProperty } from '../../../src/ts/interfaces/ISourceProperty';
                 const srcPropLevel1 = TestHelper.createSourceProperty(srcLevel1, srcLevel1 + '.' + srcLevel2, dstLevel1 + '.' + dstLevel2, null, null);
                 const srcPropLevel2 = TestHelper.createSourceProperty(srcLevel2, srcLevel1 + '.' + srcLevel2, dstLevel1 + '.' + dstLevel2, srcPropLevel1, dstPropLevel1);
                 srcPropLevel1.children.push(srcPropLevel2);
-
-                expect(properties[propertyIndex]).toMatchObject(srcPropLevel1 /* prevent stack overflow exception (parent/child properties) */);
+                expect(isEqual(properties[propertyIndex], srcPropLevel1)).toBeTruthy();
+               // expect(properties[propertyIndex]).toMatchObject(srcPropLevel1 /* prevent stack overflow exception (parent/child properties) */);
             };
 
             assertFunc('homeAddress', 'address2', 'homeAddress', 'address2', mapFromHomeAddressAddress2, 0);

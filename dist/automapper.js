@@ -139,22 +139,25 @@ class AutoMapper extends AutoMapperBase_1.AutoMapperBase {
                 return;
             }
             const functionParameters = AutoMapperHelper_1.AutoMapperHelper.getFunctionParameters(tcClassOrFunc.toString());
+            const isClass = AutoMapperHelper_1.AutoMapperHelper.isClassConstructor(tcClassOrFunc.toString());
+            if (isClass) {
+                let typeConverter;
+                try {
+                    typeConverter = (new tcClassOrFunc());
+                    // typeConverter = (new (tcClassOrFunc as new () => TypeConverter)() as TypeConverter);
+                }
+                catch (e) {
+                    // Obviously, typeConverterClassOrFunction is not a TypeConverter class definition
+                }
+                if (typeConverter instanceof TypeConverter_1.TypeConverter) {
+                    configureSynchronousConverterFunction(typeConverter.convert);
+                    return;
+                }
+            }
             switch (functionParameters.length) {
                 default:
                 case 0:
                     // check if sync: TypeConverter class definition
-                    let typeConverter;
-                    try {
-                        typeConverter = (new tcClassOrFunc());
-                        // typeConverter = (new (tcClassOrFunc as new () => TypeConverter)() as TypeConverter);
-                    }
-                    catch (e) {
-                        // Obviously, typeConverterClassOrFunction is not a TypeConverter class definition
-                    }
-                    if (typeConverter instanceof TypeConverter_1.TypeConverter) {
-                        configureSynchronousConverterFunction(typeConverter.convert);
-                        return;
-                    }
                     break;
                 case 1:
                     // sync: function with resolutionContext parameter

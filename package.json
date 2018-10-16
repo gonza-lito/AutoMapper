@@ -1,7 +1,7 @@
 {
-  "name": "automapper-ts",
+  "name": "automapper-ts-node",
   "version": "1.9.0",
-  "description": "A convention-based object-object mapper in JavaScript, written in TypeScript. Ported from the original C# AutoMapper library at https://github.com/AutoMapper/AutoMapper.",
+  "description": "A nodejs port of https://github.com/loedeman/AutoMapper...",
   "keywords": [
     "automapper",
     "convention-based",
@@ -11,13 +11,9 @@
   ],
   "scripts": {
     "build": "nps build",
-    "test": "jest --testPathPattern=unit"
+    "test": "jest"
   },
-  "author": "Bert Loedeman",
-  "homepage": "https://github.com/loedeman/AutoMapper",
-  "bugs": {
-    "url": "https://github.com/loedeman/AutoMapper/issues"
-  },
+  "author": "Gonzalo romano",
   "license": "MIT",
   "main": "./dist/automapper.js",
   "types": "./dist/automapper.d.ts",
@@ -26,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/loedeman/AutoMapper.git"
+    "url": "https://github.com/gonza-lito/AutoMapper"
   },
   "devDependencies": {
     "@types/jest": "^23.3.3",
@@ -67,5 +63,7 @@
     "tslint": "^5.3.2",
     "typescript": "^3.0.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
 }

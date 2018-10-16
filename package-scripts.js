@@ -7,38 +7,7 @@ const { series, crossEnv, concurrent, rimraf, runInNewWindow } = require('nps-ut
 module.exports = {
     scripts: {
         default: 'nps build',
-        /**
-         * Starts the builded app from the dist directory
-         */
-        // start: {
-        //     script: 'node dist/app.js',
-        //     description: 'Starts the builded app from the dist directory'
-        // },
-        /**
-         * Serves the current app and watches for changes to restart it
-         */
-        // serve: {
-        //     script: series(
-        //         'nps banner.serve',
-        //         'nodemon --watch src --watch .env'
-        //     ),
-        //     description: 'Serves the current app and watches for changes to restart it'
-        // },
-        /**
-         * Setup of the development environment
-         */
-        // setup: {
-        //     script: series(
-        //         'yarn install',
-        //         'nps db.drop',
-        //         'nps db.migrate',
-        //         'nps db.seed'
-        //     ),
-        //     description: 'Setup`s the development environment(yarn & database)'
-        // },
-        /**
-         * Creates the needed configuration files
-         */
+
         config: {
             script: series(
                 runWJson('./commands/tsconfig.ts')
