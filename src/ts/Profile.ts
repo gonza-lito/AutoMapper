@@ -1,4 +1,4 @@
-import { AutoMapper } from './AutoMapper';
+import { AutoMapper } from './AutoMapperClass';
 import { ICreateMapFluentFunctions } from './interfaces/ICreateMapFluentFunctions';
 import { INamingConvention } from './interfaces/INamingConvention';
 import { IProfile } from './interfaces/IProfile';

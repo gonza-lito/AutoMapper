@@ -1,4 +1,4 @@
-import { AutoMapper } from '../../../src/ts/AutoMapper';
+import { AutoMapper } from '../../../src/ts/AutoMapperClass';
 import { IMapCallback } from '../../../src/ts/interfaces/IMapCallback';
 import { IMemberCallback } from '../../../src/ts/interfaces/IMemberCallback';
 import {

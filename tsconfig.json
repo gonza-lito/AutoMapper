@@ -26,6 +26,7 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "resolveJsonModule": true,
+        "declaration": true,
         "typeRoots": [
             "./node_modules/@types",
             "./src/types"

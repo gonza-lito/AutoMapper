@@ -1,4 +1,4 @@
-import { AutoMapper } from '../../../src/ts/AutoMapper';
+import { AutoMapper } from '../../../src/ts/AutoMapperClass';
 import {
     IMemberConfigurationOptions
 } from '../../../src/ts/interfaces/IMemberConfigurationOptions';

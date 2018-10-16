@@ -1,4 +1,4 @@
-import { AutoMapper } from '../../../src/ts/AutoMapper';
+import { AutoMapper } from '../../../src/ts/AutoMapperClass';
 import { DestinationTransformationType } from '../../../src/ts/AutoMapperEnumerations';
 import { IMapping } from '../../../src/ts/interfaces/IMapping';
 import {

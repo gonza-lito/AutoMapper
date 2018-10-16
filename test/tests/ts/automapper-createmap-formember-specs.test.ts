@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash';
 
-import { AutoMapper } from '../../../src/ts/AutoMapper';
+import { AutoMapper } from '../../../src/ts/AutoMapperClass';
 import { DestinationTransformationType } from '../../../src/ts/AutoMapperEnumerations';
 import { IDestinationProperty } from '../../../src/ts/interfaces/IDestinationProperty';
 import { IDestinationTransformation } from '../../../src/ts/interfaces/IDestinationTransformation';

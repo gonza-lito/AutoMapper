@@ -1,6 +1,6 @@
-import { AutoMapper as am } from './AutoMapper';
+import { AutoMapper as am } from './AutoMapperClass';
 
-export * from './AutoMapper';
+export * from './AutoMapperClass';
 export * from './interfaces/IConfiguration';
 export * from './interfaces/IProfile';
 export * from './naming-conventions/CamelCaseNamingConvention';
