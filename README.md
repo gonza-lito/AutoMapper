@@ -1,5 +1,12 @@
 # AutoMapper
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url]
+
+This a nodejs port from Automapper-ts lib.
+
+## Changes:
+* Remove global scope variable
+* Refactored all ts code.
+* Changed unit test to jest
+* Removed support for currying.
 
 This is a TypeScript / Javascript AutoMapper implementation. The pursuit of this implementation is to mimic both usage and functionality of the [original .NET AutoMapper library](https://github.com/AutoMapper/AutoMapper).
 
@@ -14,21 +21,9 @@ Check out the [getting started guide](https://github.com/loedeman/AutoMapper/wik
 ## Where can I get it?
 First, install npm. Then, install [AutoMapperTS](https://www.npmjs.com/package/automapper-ts) from NPM:
 
-[![automapper-ts @ npmjs.com](https://nodei.co/npm/automapper-ts.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/automapper-ts)
+[![automapper-ts-node @ npmjs.com](https://nodei.co/npm/automapper-ts-node.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/automapper-ts-node)
 
-	npm install automapper-ts
+	npm install automapper-ts-node
 
-Of course, you can use Bower to install [AutoMapperTS](http://bower.io/search/?q=automapper-ts). Install Bower first. Finally, install from bower using:
-
-	bower install automapper-ts
-
-AutoMapper is Copyright &copy; 2016 [Bert Loedeman](http://dotbert.loedeman.nl) ([@loedeman](https://twitter.com/loedeman)) and other contributors under the [MIT license](LICENSE).
-
-[npm-url]: https://npmjs.org/package/automapper-ts
-[npm-image]: https://img.shields.io/npm/v/automapper-ts.svg?style=flat-square
-
-[travis-url]: http://travis-ci.org/loedeman/AutoMapper
-[travis-image]: https://img.shields.io/travis/loedeman/AutoMapper/master.svg?style=flat-square
-
-[coveralls-url]: https://coveralls.io/r/loedeman/AutoMapper
-[coveralls-image]: https://img.shields.io/coveralls/loedeman/AutoMapper/master.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/automapper-ts-node
+[npm-image]: https://img.shields.io/npm/v/automapper-ts-node.svg?style=flat-square

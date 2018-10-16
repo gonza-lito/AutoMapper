@@ -64,6 +64,8 @@ module.exports = {
         copy: {
             default: {
                 script: series(
+                    'nps copy.packageJson',
+                    'nps copy.readme',
                     `nps copy.public`
                 ),
                 hiddenFromHelp: true
@@ -71,6 +73,20 @@ module.exports = {
             public: {
                 script: copy(
                     './src/public/*',
+                    './dist'
+                ),
+                hiddenFromHelp: true
+            },
+            packageJson: {
+                script: copyfile(
+                    './package.json',
+                    './dist'
+                ),
+                hiddenFromHelp: true
+            },
+            readme: {
+                script: copyfile(
+                    './README.md',
                     './dist'
                 ),
                 hiddenFromHelp: true
@@ -224,6 +240,9 @@ function banner(name) {
 
 function copy(source, target) {
     return `copyup ${source} ${target}`;
+}
+function copyfile(source, target) {
+    return `copyfiles ${source} ${target}`;
 }
 
 function run(path) {

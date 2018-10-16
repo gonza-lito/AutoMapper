@@ -8,5 +8,6 @@ export * from './naming-conventions/PascalCaseNamingConvention';
 export * from './interfaces/IMemberConfigurationOptions';
 export * from './interfaces/ICreateMapFluentFunctions';
 export * from './interfaces/ICreateMapForMemberParameters';
+export * from './interfaces/INamingConvention';
 
 export const AutoMapperInstance = am.getInstance();
