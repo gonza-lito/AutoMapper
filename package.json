@@ -13,11 +13,11 @@
     "build": "nps build",
     "test": "jest"
   },
-  "author": "Gonzalo romano",
+  "author": "Nebojsa Loznjakovic",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gonza-lito/AutoMapper"
+    "url": "https://github.com/nloznjakovic/AutoMapper"
   },
   "devDependencies": {
     "@types/jest": "^23.3.3",
