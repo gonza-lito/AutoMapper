@@ -63,8 +63,8 @@ export class AutoMapperHelper {
         } else if ( functionString.indexOf('=>') !== -1 ) {
             argsString = functionString.slice(0, functionString.indexOf('=>')).trim();
 
-            if(argsString.indexOf('(') === 0){
-                argsString = argsString.slice(argsString.indexOf('(') + 1, argsString.indexOf(')'))
+            if (argsString.indexOf('(') === 0) {
+                argsString = argsString.slice(argsString.indexOf('(') + 1, argsString.indexOf(')'));
             }
         }
 
