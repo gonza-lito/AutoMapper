@@ -78,7 +78,7 @@ import { TypeConverter } from './TypeConverter';
                 },
                 createMap(sourceKey: string, destinationKey: string): IFluentFunc {
                     // pass through using arguments to keep createMap's currying support fully functional.
-                    return that.createMap.apply(that, arguments);
+                    return that.createMap.apply(that, arguments as any);
                 },
             } as any;
 
@@ -184,7 +184,7 @@ import { TypeConverter } from './TypeConverter';
 
         private createMapConvertUsing(mapping: IMapping, tcClassOrFunc: convertUsingClassOrInstanceOrFunction): void {
             const configureSynchronousConverterFunction = (converterFunc: any): void => {
-                if (!converterFunc || AutoMapperHelper.getFunctionParameters(converterFunc.toString()).length !== 1) {
+                if (!converterFunc || converterFunc.length !== 1) {
                     throw new Error('The function provided does not provide exactly one (resolutionContext) parameter.');
                 }
 
@@ -198,8 +198,6 @@ import { TypeConverter } from './TypeConverter';
                     configureSynchronousConverterFunction(tcClassOrFunc.convert);
                     return;
                 }
-
-                const functionParameters = AutoMapperHelper.getFunctionParameters(tcClassOrFunc.toString());
                 const isClass = AutoMapperHelper.isClassConstructor(tcClassOrFunc.toString());
 
                 if (isClass) {
@@ -215,7 +213,7 @@ import { TypeConverter } from './TypeConverter';
                             return;
                         }
                 }
-                switch (functionParameters.length) {
+                switch (tcClassOrFunc.length) {
                     default:
                     case 0:
 

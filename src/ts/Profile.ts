@@ -42,6 +42,6 @@ export class Profile implements IProfile {
 
         const instance = AutoMapper.getInstance();
         // pass through using arguments to keep createMap's currying support fully functional.
-        return instance.createMap.apply(instance, argsCopy);
+        return instance.createMap.apply(instance, argsCopy as any);
     }
 }

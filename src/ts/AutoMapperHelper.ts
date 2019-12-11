@@ -56,7 +56,20 @@ export class AutoMapperHelper {
 
         const functionString = functionStr.replace(stripComments, '');
 
-        let functionParameterNames = functionString.slice(functionString.indexOf('(') + 1, functionString.indexOf(')')).match(argumentNames);
+        let argsString: string;
+
+        if (functionString.indexOf('function') === 0) {
+            argsString = functionString.slice(functionString.indexOf('(') + 1, functionString.indexOf(')'));
+        } else if ( functionString.indexOf('=>') !== -1 ) {
+            argsString = functionString.slice(0, functionString.indexOf('=>')).trim();
+
+            if (argsString.indexOf('(') === 0) {
+                argsString = argsString.slice(argsString.indexOf('(') + 1, argsString.indexOf(')'));
+            }
+        }
+
+        let functionParameterNames = argsString.match(argumentNames);
+
         if (functionParameterNames === null) {
             functionParameterNames = new Array<string>();
         }
@@ -118,7 +131,7 @@ export class AutoMapperHelper {
         const functionStr = func.toString();
         const parameterNames = AutoMapperHelper.getFunctionParameters(functionStr);
 
-        const optsParamName = parameterNames.length >= 1 ? parameterNames[0] : '';
+        const optsParamName = func.length >= 1 ? parameterNames[0] : '';
 
         const source = sourceMapping
             ? destination
@@ -127,11 +140,11 @@ export class AutoMapperHelper {
         const metadata: IMemberMappingMetaData = {
             destination,
             source,
-            transformation: AutoMapperHelper.getDestinationTransformation(func, true, sourceMapping, parameterNames.length === 2),
+            transformation: AutoMapperHelper.getDestinationTransformation(func, true, sourceMapping, func.length === 2),
             sourceMapping,
             condition: null,
             ignore: AutoMapperHelper.getIgnoreFromString(functionStr, destination),
-            async: parameterNames.length === 2,
+            async: func.length === 2,
         };
 
         // calling the member options function when used asynchronous would be too 'dangerous'.
